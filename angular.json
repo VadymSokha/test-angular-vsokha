@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "projects": {
+    "example-2": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/example-2",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.json",
+            "assets": [
+              "src/assets"
+            ],
+            "aot": true,
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "example-2:build"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "example-2",
+  "cli": {
+    "analytics": "5eeb1f5e-7834-4628-9fdb-451525775ce9"
+  }
+}

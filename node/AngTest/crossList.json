@@ -1,0 +1,11 @@
+{ "crossList": 
+	[{"project":0,"worker":null},
+	{"project":0,"worker":"5"},
+	{"project":"2","worker":"2"},
+	{"project":1,"worker":"5"},	
+	{"project":"2","worker":"5"},
+	{"project":4,"worker":"3"},
+	{"project":3,"worker":"4"},
+	{"project":"5","worker":2},
+	{"project":1,"worker":"1"}] 
+}
