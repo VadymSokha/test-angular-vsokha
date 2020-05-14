@@ -5,24 +5,26 @@ import { Worker} from './worker';
 import { Project} from './project';
 import { Prworker} from './prworker';
 import { DataService } from './data.service';
-// mat-table [dataSource]="myDataArray"
+import {Sort} from '@angular/material/sort';
+
+
+ 
 @Component({
     selector: 'worker-list',
-    template: `	<table border="1" class="workersList" id="workersTable" mat-table>
-					<thead class="workersHead">
-					<tr mat-header-row>
-					<th mat-header-row colspan="7">Список работников</th>
-					</tr> 
+    template: `	<table matSort (matSortChange)="sortData($event)"> 
 					<tr>
-                    <th mat-header-cell>№</th>
-                    <th mat-header-cell>Фамилия</th>
-                    <th mat-header-cell>Имя</th>
-                    <th mat-header-cell>Отчество</th>
-                    <th mat-header-cell>Возраст</th>
-                    <th mat-header-cell>Пол</th>
-                    <th mat-header-cell>Удалить</th>
+						<th mat-header-row colspan="7">Список работников</th>
 					</tr>
-					</thead>
+
+					<tr>
+                    	<th mat-sort-header="regnum">№</th>
+                    	<th mat-sort-header="lastname">Фамилия</th>
+                    	<th mat-sort-header="firstname">Имя</th>
+                    	<th mat-sort-header="secondname">Отчество</th>
+                    	<th mat-sort-header="age">Возраст</th>
+                    	<th mat-sort-header="sex">Пол</th>
+                    	<th mat-sort-header="del">Удалить</th>
+					</tr>
 					<tbody id="bodyWorkers">
 					<tr *ngFor="let worker of workers" (click)="setMarker($event);">
                     <td class="center regnumber">{{worker?.regnum}}</td>
@@ -78,6 +80,9 @@ import { DataService } from './data.service';
 			.normalHeight {
 				padding: 1px;
 			}
+			.mat-sort-header-container {
+				align-items: center;
+			}
 			`]
 })
 
@@ -94,8 +99,11 @@ export class App1Component implements OnInit {
     prworkers: Prworker[]=[];
 
     error: any;
+	sortedData: Worker[];
 
-    constructor(private httpService: HttpService,private dataService: DataService){}
+    constructor(private httpService: HttpService,private dataService: DataService){
+		//this.sortedData = this.workers.slice();
+	}
       
     ngOnInit(){
         this.httpService.getData('workersList').subscribe(data => this.workers=data["workersList"],
@@ -164,6 +172,27 @@ export class App1Component implements OnInit {
 		
 	};
 
+	sortData(sort: Sort) {
+    	const data = this.workers.slice();
+    	if (!sort.active || sort.direction === '') {
+      		this.sortedData = data;
+      		return;
+    	}
+
+    	this.sortedData = data.sort((a, b) => {
+      		const isAsc = sort.direction === 'asc';
+      		switch (sort.active) {
+        		case 'regnum': return this.compare(a.regnum, b.regnum, isAsc);
+        		case 'firstname': return this.compare(a.firstname, b.firstname, isAsc);
+        		case 'lastname': return this.compare(a.lastname, b.lastname, isAsc);
+        		case 'secondname': return this.compare(a.secondname, b.secondname, isAsc);
+        		case 'age': return this.compare(a.age, b.age, isAsc);
+        		case 'sex': return this.compare(a.sex, b.sex, isAsc);
+        		default: return 0;
+      		}
+    	});
+	};
+
 	delWorker(bt){
 		this.currentWorker = bt.target.value;
 		let k = this.dataService.findWorker(this.currentWorker);
@@ -182,5 +211,11 @@ export class App1Component implements OnInit {
 			};
 		};
 	}
+
+
+	compare(a: number | string, b: number | string, isAsc: boolean) {
+		return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+	}
+
 
 }
