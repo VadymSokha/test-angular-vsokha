@@ -1,58 +1,66 @@
-import { Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import { HttpService} from './http.service';
-import { Worker} from './worker';
-import { Project} from './project';
-import { Prworker} from './prworker';
+import { Component, OnInit, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpService } from './http.service';
+import { Worker } from './worker';
+import { Project } from './project';
+import { Prworker } from './prworker';
 import { DataService } from './data.service';
-import {Sort} from '@angular/material/sort';
+//import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
-
- 
 @Component({
-    selector: 'worker-list',
-    template: `	<table matSort (matSortChange)="sortData($event)"> 
-					<tr>
-						<th mat-header-row colspan="7">Список работников</th>
-					</tr>
+    selector: 'worker-list', 
+    template: `	<div class="workersHead age input">Список работников</div>
+				<table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">  
+					
+					<ng-container matColumnDef="regnm">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> № </th>
+						<td mat-cell *matCellDef="let worker">{{worker.regnum}}</td>
+					</ng-container>
+					<ng-container matColumnDef="lastname">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>Фамилия</th>
+						<td mat-cell *matCellDef="let worker">
+							<input matInput="text" [(ngModel)]="worker.lastname" placeholder="Фамилия">
+						</td>
+					</ng-container> 
+					<ng-container matColumnDef="firstname">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>Имя</th>
+						<td mat-cell *matCellDef="let worker">
+							<input matInput="text" class="first" [(ngModel)]="worker.firstname">
+						</td>
+					</ng-container> 
+					<ng-container matColumnDef="secondname">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>Отчество</th>
+						<td mat-cell *matCellDef="let worker">
+							<input matInput class="second" [(ngModel)]="worker.secondname">
+						</td>
+					</ng-container> 
+					<ng-container matColumnDef="age">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>Отчество</th>
+						<td mat-cell *matCellDef="let worker">
+							<input matInput="number" class="age" [(ngModel)]="worker.age">
+						</td>
+					</ng-container> 
+					<ng-container matColumnDef="sex">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>Отчество</th>
+						<td mat-cell *matCellDef="let worker">
+							<select class="form-control sex" [(ngModel)]="worker.sex">
+                            	<option [value]="0">мужской</option>
+                            	<option [value]="1">женский</option>
+                        	</select>
+						</td>
+					</ng-container> 
+					<ng-container matColumnDef="del">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>Отчество</th>
+						<td mat-cell *matCellDef="let worker">
+							<button [value]="worker.regnum" class="normalHeight" (click)="delWorker($event);" 
+								title="Для удаления работника">№ {{worker?.regnum}}</button>
+						</td>
+					</ng-container> 
 
-					<tr>
-                    	<th mat-sort-header="regnum">№</th>
-                    	<th mat-sort-header="lastname">Фамилия</th>
-                    	<th mat-sort-header="firstname">Имя</th>
-                    	<th mat-sort-header="secondname">Отчество</th>
-                    	<th mat-sort-header="age">Возраст</th>
-                    	<th mat-sort-header="sex">Пол</th>
-                    	<th mat-sort-header="del">Удалить</th>
-					</tr>
-					<tbody id="bodyWorkers">
-					<tr *ngFor="let worker of workers" (click)="setMarker($event);">
-                    <td class="center regnumber">{{worker?.regnum}}</td>
-                    <td><input matInput="text" class="last" [(ngModel)]="worker.lastname"></td>
-                    <td><input matInput="text" class="first" [(ngModel)]="worker.firstname"></td>
-                    <td><input matInput class="second" [(ngModel)]="worker.secondname"></td>
-                    <td class="center"><input matInput="number" class="age" [(ngModel)]="worker.age"></td>
-					<td><select class="form-control sex" [(ngModel)]="worker.sex">
-                            <option [value]="0">мужской</option>
-                            <option [value]="1">женский</option>
-                        </select></td>
-					<td><button [value]="worker.regnum" class="normalHeight" (click)="delWorker($event);" 
-						title="Для удаления работника">№ {{worker?.regnum}}
-					</button></td>
-					</tr>
-					<tr>
-                    <td class="regnumber">{{addWorker?.regnum}}</td>
-					<td><input matInput="text" [(ngModel)]="addWorker.lastname" placeholder="Фамилия">
-					</td>
-                    <td><input matInput="text" class="first" [(ngModel)]="addWorker.firstname"/></td>
-                    <td><input matInptu="text" class="second" type="text" [(ngModel)]="addWorker.secondname"/></td>
-                    <td><input matInput="number" class="age" [(ngModel)]="addWorker.age"></td>
-					<td><select class="form-control sex" [(ngModel)]="addWorker.sex">
-                            <option [value]=0>мужской</option>
-                            <option [value]=1>женский</option>
-                        </select></td>
-					</tr>
-					</tbody> 
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
                </table>
 	
 				<button (click)="saveWorkers(workers,'workersList');" mat-raised-button color="primary">
@@ -98,17 +106,24 @@ export class App1Component implements OnInit {
 	currentWorker: number;   
     prworkers: Prworker[]=[];
 
+	displayedColumns: string[] = ['regnum', 'lastname', 'firstname', 'secondname','age','sex','del'];
+	dataSource;
+
     error: any;
-	sortedData: Worker[];
 
     constructor(private httpService: HttpService,private dataService: DataService){
-		//this.sortedData = this.workers.slice();
 	}
+
+	//@ViewChild(MatSort, {static: true}) sort: MatSort;
+
+	
       
     ngOnInit(){
         this.httpService.getData('workersList').subscribe(data => this.workers=data["workersList"],
             error => {this.error = error.message; console.log(error);});
 		this.dataService.initialProjectWorker();
+		this.dataSource = new MatTableDataSource(this.workers);
+		//this.dataSource.sort = this.sort;
     }
 
 	saveWorkers(workers,suite){
@@ -172,27 +187,6 @@ export class App1Component implements OnInit {
 		
 	};
 
-	sortData(sort: Sort) {
-    	const data = this.workers.slice();
-    	if (!sort.active || sort.direction === '') {
-      		this.sortedData = data;
-      		return;
-    	}
-
-    	this.sortedData = data.sort((a, b) => {
-      		const isAsc = sort.direction === 'asc';
-      		switch (sort.active) {
-        		case 'regnum': return this.compare(a.regnum, b.regnum, isAsc);
-        		case 'firstname': return this.compare(a.firstname, b.firstname, isAsc);
-        		case 'lastname': return this.compare(a.lastname, b.lastname, isAsc);
-        		case 'secondname': return this.compare(a.secondname, b.secondname, isAsc);
-        		case 'age': return this.compare(a.age, b.age, isAsc);
-        		case 'sex': return this.compare(a.sex, b.sex, isAsc);
-        		default: return 0;
-      		}
-    	});
-	};
-
 	delWorker(bt){
 		this.currentWorker = bt.target.value;
 		let k = this.dataService.findWorker(this.currentWorker);
@@ -211,11 +205,5 @@ export class App1Component implements OnInit {
 			};
 		};
 	}
-
-
-	compare(a: number | string, b: number | string, isAsc: boolean) {
-		return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-	}
-
 
 }

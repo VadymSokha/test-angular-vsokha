@@ -18,12 +18,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
 import { MyNavComponent } from './my-nav/my-nav.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+//import { MatSort } from '@angular/material/sort';
+                           
 @NgModule({
-    imports:      [ BrowserModule, FormsModule, HttpClientModule, BrowserAnimationsModule, LayoutModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatSliderModule ],
+    imports:      [ BrowserModule, FormsModule, HttpClientModule, 
+					BrowserAnimationsModule, LayoutModule, 
+					MatToolbarModule, MatButtonModule, MatSidenavModule, 
+					MatIconModule, MatListModule, MatSliderModule , MatTableDataSource ] ,
     declarations: [ AppComponent, App1Component, App2Component, App3Component, App4Component, App5Component, MyNavComponent ],
 	providers:    [],
     bootstrap:    [ AppComponent, App1Component, App2Component, App3Component, App4Component, App5Component ]
 })
-export class AppModule {}
-
+export class AppModule {
+						} 
