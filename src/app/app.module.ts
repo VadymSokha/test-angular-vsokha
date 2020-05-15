@@ -27,7 +27,8 @@ import { MatTableDataSource } from '@angular/material/table';
 					BrowserAnimationsModule, LayoutModule, 
 					MatToolbarModule, MatButtonModule, MatSidenavModule, 
 					MatIconModule, MatListModule, MatSliderModule , MatTableDataSource ] ,
-    declarations: [ AppComponent, App1Component, App2Component, App3Component, App4Component, App5Component, MyNavComponent ],
+    declarations: [ AppComponent, App1Component, App2Component, App3Component, App4Component, 
+					App5Component, MyNavComponent ],
 	providers:    [],
     bootstrap:    [ AppComponent, App1Component, App2Component, App3Component, App4Component, App5Component ]
 })

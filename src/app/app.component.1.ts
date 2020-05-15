@@ -7,12 +7,11 @@ import { Prworker } from './prworker';
 import { DataService } from './data.service';
 //import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
+	
 @Component({
     selector: 'worker-list', 
     template: `	<div class="workersHead age input">Список работников</div>
-				<table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8"> 
-					
+				<table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">  
 					<ng-container matColumnDef="regnm">
 						<th mat-header-cell *matHeaderCellDef mat-sort-header> № </th>
 						<td mat-cell *matCellDef="let worker">{{worker.regnum}}</td>
