@@ -122,7 +122,6 @@ export class App3Component implements OnInit {
 		let newWorker: Prworker = 	{	"project" : null ,
 										"worker" : null };
 		newWorker.project = Number(rn);
-		alert(rn);
 		this.prworkers.splice(0, 0, newWorker);
 		//
 		var rows = document.getElementById("bodyCross").getElementsByTagName("tr");

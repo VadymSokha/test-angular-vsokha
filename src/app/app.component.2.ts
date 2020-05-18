@@ -8,35 +8,42 @@ import { DataService } from './data.service';
 
 @Component({
     selector: 'table-projects',
-    template: `	<table border="1" class="projectsList" id="projectsTable">
-					<thead class="projectsHead">
+    template: `	<div class="projectsHead center">Список проектов</div>	 
+				<table mat-table  #projectsTable [dataSource]="projects" class="mat-elevation-z8">
+					<ng-container matColumnDef="regnum">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> № </th>
+						<td mat-cell *matCellDef="let element">{{element.regnum}}</td>
+					</ng-container>
+					<ng-container matColumnDef="nameProject">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Название проекта</th>
+						<td mat-cell *matCellDef="let element">
+							<input matInput="text" [(ngModel)]="element.nameProject" placeholder="Название"></td>
+					</ng-container> 
+					<ng-container matColumnDef="del">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Удалить?</th>
+						<td mat-cell *matCellDef="let element">
+							<button [value]="element.regnum" (click)="delProject($event);"
+								title="Для удаления проекта">№ {{element?.regnum}}</button></td>
+					</ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="projectColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: projectColumns;" (click)="setMarker($event);"></tr>
+
+                </table>
+
+				<table>
 					<tr>
-					<th colspan="3">Список проектов</th>
+                    <td class="newinput regnumber center">?</td>
+                    <td><input class="newinput nameProject" type="text" [(ngModel)]="addProject.nameProject" placeholder="Наименование проекта"></td>
+					<td>Новый</td>
 					</tr>
-					<tr>
-                    <th>№</th>
-                    <th>Название проекта</th>
-                    <th>Удалить</th>
-					</tr>
-					</thead> 
-					<tbody id="bodyProjects">
-					<tr *ngFor="let project of projects" (click)="setMarker($event);">
-                    <td class="regnum center">{{project.regnum}}</td>
-                    <td><input class="nameProject" type="text" [(ngModel)]="project.nameProject"></td>
-					<td><button [value]="project.regnum" (click)="delProject($event);"
-						title="Для удаления проекта">№ {{project?.regnum}}</button></td>
-					</tr>
-					<tr nohide="yes">
-                    <td class="regnumber center">{{addProject?.regnum}}</td>
-                    <td><input class="nameProject" type="text" [(ngModel)]="addProject.nameProject"/></td>
-					</tr>
-					</tbody> 
-               </table>
+				</table>
+
 				<button (click)="saveProjects(projects,'projectsList');" mat-raised-button color=primary>
 					Сохранить изменения в списке проектов</button>`,
     providers: [HttpService,DataService],
 	styles: [`
-			input, button {width: 100%;}
+			input, button , table {width: 100%;}
 			.projectsList {
 				width: 100%;
 			}
@@ -50,7 +57,20 @@ import { DataService } from './data.service';
 			td, input, select {
 				background: inherit;
 			}
-			`]
+			input, select {
+				background: inherit;
+				width: 100%;
+				height: 100%;
+				color: yellow;
+				border: 0px;
+				margin: 0px;
+				paddin: 0px;
+			}
+			.newinput {
+				background: white;
+				color: black;
+			}
+			` ]
 })
 
 
@@ -63,6 +83,7 @@ export class App2Component implements OnInit {
 							"regnum": null ,
 							"nameProject": "" 
 							};
+	projectColumns: string[] = ['regnum', 'nameProject','del'];
     error: any;
 
     constructor(private httpService: HttpService,private dataService: DataService){}
@@ -91,6 +112,10 @@ export class App2Component implements OnInit {
                     (data: Project) => {null},
                     error => console.log(error)
                 );
+		console.log("Перечитаем список проектов");
+		this.httpService.getData('projectList').subscribe(data => this.projects=data["projectList"],
+            error => {this.error = error.message; console.log(error);});
+		this.dataService.initialProjectWorker();
 	}
 
 	setMarker(ev){
@@ -98,10 +123,12 @@ export class App2Component implements OnInit {
 		if(ev.target.parentNode.tagName == "TR"){
 			var obj = ev.target;
 		} else {
-			var obj = ev.target.parentNode.parentNode.firstChild;
+			let up2 = ev.target.parentNode.parentNode
+			obj = up2.firstElementChild;
+			console.log(obj.tagName+"\nparent = "+up2.tagName);
 		};
 		rn = obj.innerHTML;
-		var trs = document.getElementById("bodyProjects").getElementsByTagName("tr");
+		/*var trs = document.getElementById("bodyProjects").getElementsByTagName("tr");
 		for(let i = 0;i < trs.length;i++){
 			//trs[i].style.backgroundColor = "white";
 			obj = trs[i].firstChild;
@@ -110,7 +137,7 @@ export class App2Component implements OnInit {
 				//trs[i].style.backgroundColor = "#ffffe0";
 				document.getElementById("crossTable").setAttribute("currentProject",rn);
 			};
-		};
+		};*/
 		let bt = document.getElementById("saveCross");
 		bt.classList.remove("rowHide");
 		let bt2 = document.getElementById("addCross");
@@ -145,8 +172,8 @@ export class App2Component implements OnInit {
 		let elem;
 		for(elem = 0;elem < this.projects.length;elem++){
 			if(this.projects[elem].regnum == this.currentProject){
-				//alert("№ в массиве = "+elem);
 				this.projects.splice(elem,1);
+				bt.target.parentNode.parentNode.style.display='none';
 			};
 		};
 	}

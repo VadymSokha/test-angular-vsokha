@@ -1,8 +1,6 @@
 {
-  "name": "example-2",
-  "version": "1.0.0",
-  "description": "Второй Angular 9 проект",
-  "author": "Ваим Соха",
+  "name": "reexample2",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -14,16 +12,15 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.7",
-    "@angular/cdk": "^9.2.0",
+    "@angular/cdk": "^9.2.3",
     "@angular/common": "~9.0.7",
     "@angular/compiler": "~9.0.7",
     "@angular/core": "~9.0.7",
     "@angular/forms": "~9.0.7",
-    "@angular/material": "^9.2.0",
+    "@angular/material": "^9.2.3",
     "@angular/platform-browser": "~9.0.7",
     "@angular/platform-browser-dynamic": "~9.0.7",
     "@angular/router": "~9.0.7",
-    "@types/jquery": "^3.3.34",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

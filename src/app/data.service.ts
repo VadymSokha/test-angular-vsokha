@@ -24,11 +24,12 @@ export class DataService{
         this.prwr.splice(elem,1);
     }
 
-	initialProjectWorker(){  
+	initialProjectWorker(){
         this.httpService.getData('crossList').subscribe(data => this.prwr=data["crossList"]);
 	}
 
 	dataSize(){
+		console.log("dataSize");
 		return this.prwr.length;
 	}
 

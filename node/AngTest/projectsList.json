@@ -1,7 +1,1 @@
-{ "projectList": 
-	[{"regnum":1,"nameProject":"Первый учебный проект"},
-	{"regnum":2,"nameProject":"Второй учебный проект"},
-	{"regnum":3,"nameProject":"Третий учебный проект"},
-	{"regnum":4,"nameProject":"Четвертый пробный проект"},
-	{"regnum":5,"nameProject":"Пятый пробный"}] 
-}
+{ "projectList": [{"regnum":1,"nameProject":"Первый учебный проект"},{"regnum":2,"nameProject":"Второй учебный проект"},{"regnum":3,"nameProject":"Третий учебный проект"},{"regnum":4,"nameProject":"Четвертый пробный проект"},{"regnum":5,"nameProject":"Пятый пробный"}] }

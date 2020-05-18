@@ -6,7 +6,7 @@ import { Prworker} from './prworker';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
-    selector: 'example-2',
+    selector: 'reexample2',
     template: `
 
     		<mat-nav-list>
