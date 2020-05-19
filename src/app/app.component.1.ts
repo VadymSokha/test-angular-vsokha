@@ -5,45 +5,44 @@ import { Worker } from './worker';
 import { Project } from './project';
 import { Prworker } from './prworker';
 import { DataService } from './data.service';
-//import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableModule } from '@angular/material/table';
-
+import { ReactiveFormsModule }   from '@angular/forms';
 
 @Component({
     selector: 'worker-list', 
     template: `	<div class="workersHead age input">Список работников</div>	
 				<table mat-table id="tableWorker" [dataSource]="workers" class="mat-elevation-z8">
 					<ng-container matColumnDef="regnum">
-						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center"> № </th>
+						<th mat-header-cell *matHeaderCellDef class="center"> № </th>
 						<td mat-cell *matCellDef="let element" workerID="element.regnum">{{element.regnum}}</td>
 					</ng-container>
 					<ng-container matColumnDef="lastname">
-						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Фамилия</th>
+						<th mat-header-cell *matHeaderCellDef class="center">Фамилия</th>
 						<td mat-cell *matCellDef="let element" workerID="element.regnum">
 							<input matInput="text" [(ngModel)]="element.lastname" placeholder="Фамилия">
 						</td>
 					</ng-container> 
 					<ng-container matColumnDef="firstname">
-						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Имя</th>
+						<th mat-header-cell *matHeaderCellDef class="center">Имя</th>
 						<td mat-cell *matCellDef="let element" workerID="element.regnum">
 							<input matInput="text" class="first" [(ngModel)]="element.firstname">
 						</td>
 					</ng-container> 
 					<ng-container matColumnDef="secondname">
-						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Отчество</th>
+						<th mat-header-cell *matHeaderCellDef class="center">Отчество</th>
 						<td mat-cell *matCellDef="let element" workerID="element.regnum">
 							<input matInput class="second" [(ngModel)]="element.secondname">
 						</td>
 					</ng-container> 
 					<ng-container matColumnDef="age">
-						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Возраст</th>
+						<th mat-header-cell *matHeaderCellDef class="center">Возраст</th>
 						<td mat-cell *matCellDef="let element" workerID="element.regnum">
 							<input matInput="number" class="age" [(ngModel)]="element.age">
 						</td>
 					</ng-container> 
 					<ng-container matColumnDef="sex">
-						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Пол</th>
+						<th mat-header-cell *matHeaderCellDef class="center">Пол</th>
 						<td mat-cell *matCellDef="let element" workerID="element.regnum">
 							<select class="form-control sex" [(ngModel)]="element.sex">
                             	<option [value]="0">мужской</option>
@@ -52,7 +51,7 @@ import { MatTableModule } from '@angular/material/table';
 						</td>
 					</ng-container> 
 					<ng-container matColumnDef="del">
-						<th mat-header-cell *matHeaderCellDef mat-sort-header class="center">Удалить</th>
+						<th mat-header-cell *matHeaderCellDef class="center">Удалить</th>
 						<td mat-cell *matCellDef="let element" workerID="element.regnum">
 							<button [value]="element.regnum" class="normalHeight" (click)="delWorker($event);" 
 								title="Для удаления работника">№ {{element?.regnum}}</button>
@@ -68,12 +67,25 @@ import { MatTableModule } from '@angular/material/table';
 				<table>
 					<tr nohide="yes">
                     <td class="regnumber center newinput">?</td>
-                    <td><input class="newinput" type="text" [(ngModel)]="addWorker.lastname" placeholder="Фамилия"></td>
-                    <td><input class="newinput" type="text" [(ngModel)]="addWorker.firstname" placeholder="Имя"></td>
-                    <td><input class="newinput" type="text" [(ngModel)]="addWorker.secondname" placeholder="Отчество"></td>
-					<td><input type="number" class="age newinput" [(ngModel)]="addWorker.age" placeholder="Возраст"></td>
+                    <td>
+						<input class="newinput"  matInput="text"
+							[(ngModel)]="addWorker.lastname" placeholder="Фамилия">
+					</td>
+                    <td>
+						<input class="newinput"  matInput="text" [(ngModel)]="addWorker.firstname" 
+							placeholder="Имя">
+					</td>
+                    <td>
+						<input class="newinput"  matInput="text" [(ngModel)]="addWorker.secondname" 
+							placeholder="Отчество">
+					</td>
 					<td>
-							<select class="form-control sex newinput" [(ngModel)]="addWorker.sex" placeholder="Пол">
+						<input  matInput="number" class="age newinput" [(ngModel)]="addWorker.age" 
+							placeholder="Возраст">
+					</td>
+					<td>
+							<select class="form-control sex newinput" [(ngModel)]="addWorker.sex" 
+								placeholder="Пол">
                             	<option [value]="0">мужской</option>
                             	<option [value]="1">женский</option>
 							</select>
@@ -143,8 +155,6 @@ export class App1Component implements OnInit {
 
     constructor(private httpService: HttpService,private dataService: DataService){
 	};
-
-	//@ViewChild(MatSort, {static: true}) sort: MatSort;
       
     ngOnInit(){
 		console.log("Запрос на список работников");
@@ -152,8 +162,6 @@ export class App1Component implements OnInit {
             error => {this.error = error.message; console.log(error);});
 		this.dataService.initialProjectWorker();
     };
-
-//	this.dataSource.sort = this.sort;
 
 	saveWorkers(workers,suite){
 		let newWorker = this.addWorker;

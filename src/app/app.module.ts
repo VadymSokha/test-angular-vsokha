@@ -20,7 +20,6 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 
-//, MatSort
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpClientModule, 
 					BrowserAnimationsModule, LayoutModule, 

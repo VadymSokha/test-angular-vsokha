@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { HttpService} from './http.service';
 import { Worker} from './worker';
@@ -128,16 +128,6 @@ export class App2Component implements OnInit {
 			console.log(obj.tagName+"\nparent = "+up2.tagName);
 		};
 		rn = obj.innerHTML;
-		/*var trs = document.getElementById("bodyProjects").getElementsByTagName("tr");
-		for(let i = 0;i < trs.length;i++){
-			//trs[i].style.backgroundColor = "white";
-			obj = trs[i].firstChild;
-			cn = obj.innerHTML;
-			if(cn == rn){
-				//trs[i].style.backgroundColor = "#ffffe0";
-				document.getElementById("crossTable").setAttribute("currentProject",rn);
-			};
-		};*/
 		let bt = document.getElementById("saveCross");
 		bt.classList.remove("rowHide");
 		let bt2 = document.getElementById("addCross");
