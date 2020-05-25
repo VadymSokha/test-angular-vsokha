@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
+import { HttpService } from './http.service';
 
 jest.mock("@angular/common/http");
 
 describe('HttpService', () => {
 
   let httpClient: HttpClient;
-  let dataService: DataService;
+  let httpService: HttpService;
 
   beforeEach(() => {
     httpClient = new HttpClient({} as any);
