@@ -7,15 +7,11 @@ import { Prworker } from './prworker';
 export class DataService{
        
     public prwr: Prworker[]=[];
+	relSize: any;
     error: any;
 
     constructor(private httpService: HttpService){}
 
-//	ngOnInit(){
-//        console.log("Запрос к серверу");
-//		this.httpService.getData('crossList').subscribe(data => this.prwr=data["crossList"]);  
-//    }
-      
     addProjectWorker(newCross: Prworker){
         this.prwr.splice(0,0,newCross);
     }
@@ -29,8 +25,8 @@ export class DataService{
 	}
 
 	dataSize(){
-		console.log("dataSize");
-		return this.prwr.length;
+		this.relSize = this.prwr.length;
+		return this.relSize;
 	}
 
 	findWorker(elem: number) {

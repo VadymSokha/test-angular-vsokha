@@ -145,7 +145,7 @@ export class App1Component implements OnInit {
 							"secondname": "",
 							"age": null,
 							"sex": null};
-	currentWorker: number;   
+	currentWorker: number = 0;   
     prworkers: Prworker[]=[];
 
 	workerColumns: string[] = ['regnum', 'lastname', 'firstname', 'secondname','age','sex','del'];
@@ -158,9 +158,9 @@ export class App1Component implements OnInit {
       
     ngOnInit(){
 		console.log("Запрос на список работников");
+		this.dataService.initialProjectWorker();
         this.httpService.getData('workersList').subscribe(data => this.workers=data["workersList"],
             error => {this.error = error.message; console.log(error);});
-		this.dataService.initialProjectWorker();
     };
 
 	saveWorkers(workers,suite){

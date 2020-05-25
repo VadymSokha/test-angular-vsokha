@@ -5,7 +5,7 @@ import { Worker} from './worker';
 import { Project} from './project';
 import { Prworker} from './prworker';
 import { DataService } from './data.service';
-
+//
 @Component({
     selector: 'table-projects',
     template: `	<div class="projectsHead center">Список проектов</div>	 
@@ -75,7 +75,7 @@ import { DataService } from './data.service';
 
 
 export class App2Component implements OnInit { 
-   
+    title: string = 'Тест списка проектов';
 	prName = "";
 	currentProject: number = 0;
     projects: Project[]=[];
