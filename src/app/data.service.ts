@@ -2,8 +2,12 @@ import { Injectable , Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from './http.service';
 import { Prworker } from './prworker';
+import {Observable} from "rxjs";
+
+@Injectable({
+  providedIn: 'root'
+})
  
-@Injectable()
 export class DataService{
        
     public prwr: Prworker[]=[];
@@ -22,6 +26,10 @@ export class DataService{
 
 	initialProjectWorker(){
         this.httpService.getData('crossList').subscribe(data => this.prwr=data["crossList"]);
+	}
+
+	ngOnInit(){
+		this.initialProjectWorker();
 	}
 
 	dataSize(){

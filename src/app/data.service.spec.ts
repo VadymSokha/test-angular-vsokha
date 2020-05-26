@@ -1,18 +1,20 @@
 import { DataService } from "./data.service";
+import { HttpService } from "./http.service";
 //import { autoSpy } from "autoSpy";
 import { HttpClient } from "@angular/common/http";
-import { HttpService } from './http.service';
 
 jest.mock("@angular/common/http");
 
 describe("DataService", () => {
 
   let httpClient: HttpClient;
+  let httpService: HttpService;
   let dataService: DataService;
 
   beforeEach(() => {
     httpClient = new HttpClient({} as any);
-	dataService = new DataService();
+	httpService = new HttpService(httpClient);
+	dataService = new DataService(httpService);
     jest.spyOn(httpClient, "get");
 
   });
@@ -30,10 +32,10 @@ describe("DataService", () => {
   });
 
   it("when dataSize is called it should", () => {
-	//dataService.initialProjectWorker();
+	//this.dataService.initialProjectWorker();
 	let count = dataService.dataSize();
 	console.log(count);
-	expect(count).toBe(7,"Связей должно быть 7");
+	expect(count).toBe(0);
   });
 
   it("when findWorker is called it should", () => {

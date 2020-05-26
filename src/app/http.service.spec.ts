@@ -7,6 +7,7 @@ describe('HttpService', () => {
 
   let httpClient: HttpClient;
   let httpService: HttpService;
+  let ret;
 
   beforeEach(() => {
     httpClient = new HttpClient({} as any);
@@ -15,6 +16,7 @@ describe('HttpService', () => {
   });
 
   it('when getData is called it should', () => {
+	ret = httpService.getData("workersList");
   });
 
   it('when postData is called it should', () => {
