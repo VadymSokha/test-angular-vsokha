@@ -70,7 +70,7 @@ import { DataService } from './data.service';
 				background: white;
 				color: black;
 			}
-			` ]
+			` ] 
 })
 
 

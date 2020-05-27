@@ -5,12 +5,41 @@ export function autoSpy<T>(obj: new (...args: any[]) => T): SpyOf<T> {
     // turns out that in target:es2015 the methods attached to the prototype are not enumerable so Object.keys returns []. So to workaround that and keep some backwards compatibility - merge with ownPropertyNames - that disregards the enumerable property.
     const keys = [...Object.keys(obj.prototype), ...Object.getOwnPropertyNames(obj.prototype)];
     keys.forEach(key => {
-        res[key] = jasmine.createSpy(key);
+        res[key] = jest.fn();
     });
 
     return res;
 }
 
-/** Keeps the types of properties of a type but assigns type of Spy to the methods */
-type SpyOf<T> = T &
-    Partial<{ [k in keyof T]: T[k] extends (...args: any[]) => any ? jasmine.Spy : T[k] }>;
+/**
+ * Keeps the types of properties of a type but assigns type of jest.Mock to the methods.
+ * That way the methods can be mocked and examined for calls.
+ *
+ * @example
+ *
+ * class Service {
+ *  property: string;
+ *  method(): string {
+ *    return 'test'
+ *  };
+ * }
+ *
+ * it('should carry the types (only methods should be mocked)', () => {
+ *  // arrange
+ *  const ser = autoSpy(Service);
+ *  // this line would show a typescript error were it not for the type- can't assign string to jest.Mock type
+ *  ser.property = 'for the test';
+ *  ser.method.mockReturnValue('test');
+ *
+ *  // act
+ *  const res = ser.method();
+ *
+ *  // assert
+ *  expect(ser.method).toHaveBeenCalled();
+ *  expect(res).toBe('test');
+ * })
+ *
+ */
+type SpyOf<T> = T & {
+    [k in keyof T]: T[k] extends (...args: any[]) => infer R ? T[k] & jest.Mock<R> : T[k];
+};

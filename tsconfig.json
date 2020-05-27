@@ -13,10 +13,7 @@
     "target": "es2015",
     "lib": [
       "es2018",
-      "dom"//,
-//	 "paths": {
-//            "autospy": ["./src/auto-spy"]
-//        }
+      "dom",
     ]
   },
   "angularCompilerOptions": {
@@ -26,11 +23,7 @@
   },
     "lib": [
       "es2018",
-      "dom"//,
-//	 "paths": {
- //           "autospy": ["./src/auto-spy"]
-//        }
-
+      "dom"
     ],
     "files": [
         "src/main.ts",

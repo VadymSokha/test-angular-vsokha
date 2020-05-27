@@ -1,4 +1,4 @@
-import { NgModule , Injector }      from '@angular/core';
+import { NgModule , Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { AppComponent }   from './app.component';
@@ -6,7 +6,7 @@ import { App1Component }  from './app.component.1';
 import { App2Component }  from './app.component.2';
 import { App3Component }  from './app.component.3';
 import { App4Component }  from './app.component.4';
-import { App5Component }  from './app.component.5'; 
+import { App5Component }  from './app.component.5';
 import { DataService }  from './data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,16 +27,16 @@ import { createCustomElement } from '@angular/elements';
 					MatToolbarModule, MatButtonModule, MatSidenavModule, 
 					MatIconModule, MatListModule, MatSliderModule ,
 					MatTableModule ] ,
-    declarations: [ AppComponent, App1Component, App2Component, App3Component, App4Component, 
+    declarations: [ AppComponent , App1Component, App2Component, App3Component, App4Component, 
 					App5Component ],
-	entryComponents: [AppComponent ],
+	entryComponents: [AppComponent],
 	providers:    [],
     bootstrap:    [ AppComponent, App1Component, App2Component, App3Component, App4Component, App5Component ]
 })
 export class AppModule { 
 	constructor(injector: Injector) {
     	const custom = createCustomElement(AppComponent, { injector });
-		customElements.define("re-example-2", custom);
+		customElements.define("reexample2", custom);
 	}
 	ngDoBootstrap() {}
 } 

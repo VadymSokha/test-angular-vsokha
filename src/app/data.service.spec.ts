@@ -32,7 +32,7 @@ describe("DataService", () => {
   });
 
   it("when dataSize is called it should", () => {
-	//this.dataService.initialProjectWorker();
+	dataService.ngOnInit();
 	let count = dataService.dataSize();
 	console.log(count);
 	expect(count).toBe(0);

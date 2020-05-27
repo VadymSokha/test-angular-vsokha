@@ -3,12 +3,11 @@ import { HttpClient} from '@angular/common/http';
 import { HttpService} from './http.service';
 import { DataService } from './data.service';
 import { Prworker} from './prworker';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-    selector: 'reexample2',
+    selector: 're-example-2', 
     template: `
-
     		<mat-nav-list>
 				<button id="refresh" mat-raised-button color="primary" (click)="refresh();">Обновить</button>
 				<button id="allRelations" mat-raised-button color="primary"
@@ -18,7 +17,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 				<button id="help" mat-raised-button color="primary">Подсказка</button>
 				<button id="about" mat-raised-button color="primary" 
 					(click)="openAbout($event);">О программе</button>
-    		</mat-nav-list>
+    		</mat-nav-list>  
 
 <dialog id="aboutShow" class="example-box" cdkDrag>
 	<h2>Тестовая программа. Версия 1.0</h2>
