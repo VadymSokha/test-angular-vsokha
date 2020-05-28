@@ -1,0 +1,18 @@
+{
+	"workersList":
+	[{
+		"regnum": 1,
+		"lastname": "Петров",
+		"firstname": "Петр",
+		"secondname": "Петрович",
+		"age": 37,
+		"sex": 0
+	},{
+		"regnum": 2,
+		"lastname": "Сидоров",
+		"firstname": "Сидор",
+		"secondname": "Сидорович",
+		"age": 29,
+		"sex": 0
+	}]
+}
