@@ -3,7 +3,7 @@ import { App4Component } from './app.component.4';
 import { autoSpy } from 'autoSpy';
 
 describe('App4Component', () => {
-  it('when ngOnInit is called it should', () => {
+/*  it('when ngOnInit is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
@@ -11,7 +11,7 @@ describe('App4Component', () => {
     c.ngOnInit();
     // assert
     expect(c).toEqual
-  });
+  });*/
 
   it('when change is called it should', () => {
     // arrange

@@ -1,25 +1,26 @@
 import { HttpService } from './http.service';
-import { HttpClient} from '@angular/common/http';
-import { App5Component } from './app.component.5';
+import { App3Component } from './app.component.3';
+import { Prworker} from './prworker';
 import { autoSpy } from 'autoSpy';
 
-describe('App5Component', () => {
-/*  it('when ngOnInit is called it should', () => {
+describe('App3Component', () => {
+
+  it('when onChange is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    c.ngOnInit();
+    c.onChange(Event);
     // assert
     expect(c).toEqual
-  });*/
+  });
 
-  it('when change is called it should', () => {
+  it('when onChange2 is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    c.change(7);
+    c.onChange2(Event);
     // assert
     expect(c).toEqual
   });
@@ -35,7 +36,7 @@ function setup() {
       return builder;
     },
     build() {
-      return new App5Component(httpService);
+      return new App3Component(httpService);
     }
   };
 

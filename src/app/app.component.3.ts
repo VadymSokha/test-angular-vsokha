@@ -138,34 +138,26 @@ export class App3Component implements OnInit {
 	}
 
 	onChange(obj: any){
-		console.log("=onChange= "+obj.target.value);
 		var sels = document.getElementsByTagName("SELECT-WORKER");
 		//	Удалим пустые
 		for(let k = 0;k < this.prworkers.length;k++){
-			console.log("=onChange= Смотрим["+k+"]: " + this.prworkers[k].worker);
 			if(sels[k] == obj.target.parentNode && obj.target.value == 0){
 				let rem = this.prworkers.splice(k, 1);
-				console.log("=onChange= Удаляем: "+rem);
 			} else if(sels[k] == obj.target.parentNode && obj.target.value > 0){
 				this.prworkers[k].worker = obj.target.value;
-				console.log("=onChange= Меняем на = "+this.prworkers[k].worker);
 			};
 		}
 	}
 	
 
 	onChange2(obj: any){
-		console.log("=onChange= "+obj.target.value);
 		var sels = document.getElementsByTagName("SELECT-PROJECT");
 		//	Удалим пустые
 		for(let k = 0;k < this.prworkers.length;k++){
-			console.log("=onChange= Смотрим["+k+"]: " + this.prworkers[k].project);
 			if(sels[k] == obj.target.parentNode && obj.target.value == 0){
 				let rem = this.prworkers.splice(k, 1);
-				console.log("=onChange= Удаляем: "+rem);
 			} else if(sels[k] == obj.target.parentNode && obj.target.value > 0){
 				this.prworkers[k].project = obj.target.value;
-				console.log("=onChange= Меняем на = "+this.prworkers[k].project);
 			};
 		}
 	}
