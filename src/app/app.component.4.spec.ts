@@ -1,40 +1,40 @@
-import { HttpClient } from '@angular/common/http';
 import { HttpService } from './http.service';
+import { App4Component } from './app.component.4';
 import { autoSpy } from 'autoSpy';
 
-describe('HttpService', () => {
-  it('getData работает', () => {
+describe('App4Component', () => {
+  it('when ngOnInit is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    c.getData("projectList");
+    c.ngOnInit();
     // assert
-     expect(c).toEqual
+    expect(c).toEqual
   });
 
-  it('postData работает', () => {
+  it('when change is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    c.postData("UNIT-test","projectList");
+    c.change(8);
     // assert
-     expect(c).toEqual
+    expect(c).toEqual
   });
 
   
 });
 
 function setup() {
-  const http = autoSpy(HttpClient);
+  const httpService = autoSpy(HttpService);
   const builder = {
-    http,
+    httpService,
     default() {
       return builder;
     },
     build() {
-      return new HttpService(http);
+      return new App4Component(httpService);
     }
   };
 
